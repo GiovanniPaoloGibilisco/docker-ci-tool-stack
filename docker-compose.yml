@@ -19,8 +19,8 @@ services:
   networks:
     - prodnetwork
   volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /usr/local/bin/docker:/usr/bin/docker
+    - ./volumes/jenkins/var/run/docker.sock:/var/run/docker.sock
+    - ./volumes/jenkins/usr/local/bin/docker:/usr/bin/docker
   depends_on:
     - nexus
     - gitlab
@@ -42,6 +42,7 @@ services:
     - sonardb
   environment:
    - SONARQUBE_JDBC_URL=jdbc:postgresql://sonardb:5432/sonar
+
  sonardb:
   networks:
     - prodnetwork
@@ -140,10 +141,11 @@ services:
     - IMAP_SSL=true
     - IMAP_STARTTLS=false
   volumes:
-    - /srv/docker/gitlab/gitlab:/home/git/data
+    - ./volumes/gitlab/srv/docker/gitlab/gitlab:/home/git/data
+ 
  redis:
   image: sameersbn/redis:latest
   networks:
     - prodnetwork
   volumes:
-    - /srv/docker/gitlab/redis:/var/lib/redis
+    - ./volumes/gitlab/srv/docker/gitlab/redis:/var/lib/redis
